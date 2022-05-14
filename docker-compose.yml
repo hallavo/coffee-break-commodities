@@ -1,0 +1,45 @@
+version: '3'
+services:
+  database:
+    image: postgres
+    container_name: db-container
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '1234:5432'
+    volumes: 
+      - ./database/products.csv:/tmp/products.csv
+      - ./database/CreateTables.sql:/docker-entrypoint-initdb.d/CreateTables.sql
+      - ./database/InsertData.sql:/docker-entrypoint-initdb.d/InsertData.sql
+      - db_data:/var/lib/postgresql/data
+  backend:
+    build: backend
+    container_name: back-container
+    depends_on:
+      - database
+    links:
+      - database
+    environment:
+      PORT: 3000
+      NODE_ENV: production
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: postgres
+    ports:
+      - 3000:3000
+#  frontend:
+#    build: frontend
+#    environment:
+#      PORT: 3000
+#      PROXY_API: http://backend:8080/
+#    ports:
+#      - 3000:3000
+#    container_name: back-container
+#    restart: always
+volumes:
+  db_data:
+    driver: local
