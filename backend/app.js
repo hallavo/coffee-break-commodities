@@ -5,7 +5,7 @@ const http = require('http');
 const bodyParser = require('body-parser');
 
 // api.js for the routes
-const api = require('./api2');
+const api = require('./api');
 //const api = require('./api');
 const app = express();
 
