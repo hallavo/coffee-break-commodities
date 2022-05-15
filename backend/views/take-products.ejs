@@ -1,0 +1,17 @@
+<html>
+<body>
+
+<form action="/take">
+        <select id="product-dropdown">
+
+                <% products.forEach(function(p){ %>
+                <option value=<%= p.product %>> <%= p.product %> </option>
+                <% }) %>
+
+
+        </select>
+        <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>
