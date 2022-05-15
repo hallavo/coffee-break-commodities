@@ -13,5 +13,5 @@ COPY . /app/
 EXPOSE $PORT
 
 # Start the app
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "build" ]
 

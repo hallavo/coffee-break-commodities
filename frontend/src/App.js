@@ -8,7 +8,7 @@ function App() {
   }, []);
 
   function getEvent() {
-    fetch('http://back-container:3000/events')
+    fetch('http://localhost:3000/events')
       .then(response => {
         return response.text();
       })
@@ -24,7 +24,7 @@ function App() {
     let eventtime = prompt('event time');
     let amount = prompt('amount');
     let product = prompt('product');
-    fetch('http://back-container:3000/events', {
+    fetch('http://localhost:3000/events', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ function App() {
 
   return (
     <div>
-      {merchants ? merchants : 'There is no merchant data available'}
+      {events ? events : 'There is no events data available'}
       <br />
       <button onClick={createEvent}>Add an event</button>
       <br />
