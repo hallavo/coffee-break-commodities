@@ -6,8 +6,13 @@ const bodyParser = require('body-parser');
 
 // api.js for the routes
 const api = require('./api');
-//const api = require('./api');
+
+// express app object
 const app = express();
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views')); // set views dir to 'CWD/views'
+app.set('view engine', 'ejs');
 
 // body parsing middleware
 app.use(bodyParser.json());

@@ -24,14 +24,39 @@ const conn = {
 const db = pgp(conn); // database instance;
 
 // toy example
-db.any('select * from users')
-    .then(data => {
-        console.log('DATA:', data); // print data;
-    })
-    .catch(error => {
-        console.log('ERROR:', error); // print the error;
-    });
+//db.any('select * from users')
+//    .then(data => {
+//        console.log('DATA:', data); // print data;
+//    })
+//    .catch(error => {
+//        console.log('ERROR:', error); // print the error;
+//    });
 
+
+
+router.get('/edit', (req, res) => {
+	res.render('edit-profile', {
+		name: "Office Gnome",
+		email: "office.gnome@company.com",
+		phone: "1234567890"
+	});
+});
+
+
+router.get('/take', (req, res) => {
+	res.render('take-products', {
+		products: [
+			{
+				product: "Office Gnome",
+				price: "1.00"
+			},
+			{
+				product: "asdf",
+				price: "1.00"
+			}
+		]
+	});
+});
 
 //needed functions:
 //  addEvent (take item, login, logout)
@@ -44,7 +69,7 @@ db.any('select * from users')
 //	deleteUser ??
 
 // addEvent
-router.post('/events', (req, res) => {
+router.post('/api/events', (req, res) => {
 	const data = req.body;
 	const vals = [ data["username"], data["eventtype"], data["eventtime"], data["amount"], data["product"] ];
 	db.none(`INSERT INTO events (username, eventtype, eventtime, amount, product)
@@ -60,7 +85,7 @@ router.post('/events', (req, res) => {
 
 //	getEventsByDatetimeRange
 //	example: GET http://127.0.0.1:3000/usage/2022-05-01:12:00/2022-05-01:13:00
-router.get('/usage/:from/:to', (req, res) => {
+router.get('/api/usage/:from/:to', (req, res) => {
 	const [from, to] = [ req.params["from"], req.params["to"] ];
 	db.any(`SELECT product, sum(amount)
 	        FROM events
@@ -78,7 +103,7 @@ router.get('/usage/:from/:to', (req, res) => {
 
 
 // getUsers
-router.get('/users', (req, res) => {
+router.get('/api/users', (req, res) => {
 	db.any(`SELECT userid, username, email, name, phone
 	        FROM users`)
 	  .then(data => {
@@ -91,7 +116,7 @@ router.get('/users', (req, res) => {
 });
 
 //getUser (with id)
-router.get('/users/:userId', (req, res) => {
+router.get('/api/users/:userId', (req, res) => {
 	const uid = req.params["userId"];
 	db.any(`SELECT userid, username, email, name, phone
 	        FROM users
@@ -107,7 +132,7 @@ router.get('/users/:userId', (req, res) => {
 
 
 // editUser
-router.put('/users/:userId', (req, res) => {
+router.put('/api/users/:userId', (req, res) => {
 	const data = req.body;
 	const uid = req.params["userId"];
 	const vals = [ data["username"], data["email"], data["name"], data["phone"] ];
@@ -125,7 +150,7 @@ router.put('/users/:userId', (req, res) => {
 
 //	getProductStats
 //	example: GET http://127.0.0.1:3000/product-stats
-router.get('/product-stats', (req, res) => {
+router.get('/api/product-stats', (req, res) => {
 	db.any(`SELECT username, product, sum(amount)
 	        FROM events
 	        WHERE eventtype = 'take'
