@@ -1,37 +1,13 @@
 //api.js
 const express = require('express');
 const router = express.Router();
-const pgp = require('pg-promise')();
+const db = require('./db');
 const cors = require('cors');
 
 const corsOptions = {
     origin: '*',
     optionsSuccessStatus: 200
 }
-
-const conn = {
-	    host: 'db-container', 
-	    port: 5432, 
-	    database: 'postgres',
-	    user: 'postgres',
-	    password: 'postgres',
-
-	    // to auto-exit on idle, without having to shut-down the pool;
-	    // see https://github.com/vitaly-t/pg-promise#library-de-initialization
-      allowExitOnIdle: true
-};
-	
-const db = pgp(conn); // database instance;
-
-// toy example
-//db.any('select * from users')
-//    .then(data => {
-//        console.log('DATA:', data); // print data;
-//    })
-//    .catch(error => {
-//        console.log('ERROR:', error); // print the error;
-//    });
-
 
 
 router.get('/edit', (req, res) => {
@@ -58,17 +34,7 @@ router.get('/take', (req, res) => {
 	});
 });
 
-//needed functions:
-//  addEvent (take item, login, logout)
-//	getUsers
-//	editUser
-//	getEventsByDatetimeRange
-//	getProductStats
-//
-//	addUser
-//	deleteUser ??
 
-// addEvent
 router.post('/api/events', (req, res) => {
 	const data = req.body;
 	const vals = [ data["username"], data["eventtype"], data["eventtime"], data["amount"], data["product"] ];
@@ -148,6 +114,7 @@ router.put('/api/users/:userId', (req, res) => {
 	  });
 });
 
+
 //	getProductStats
 //	example: GET http://127.0.0.1:3000/product-stats
 router.get('/api/product-stats', (req, res) => {
@@ -165,67 +132,5 @@ router.get('/api/product-stats', (req, res) => {
 	  });
 });
 
-
-/*
-router.get('/jobs', cors(corsOptions), (req, res) => {
-	  res.send({
-	  	job: "mcdonalds",
-	  	tier: "shit"
-	  });
-});
-
-router.get('/users', cors(corsOptions), (req, res) => {
-	  res.send([
-	 	  {
-				id: 1,
-	    	email: "asdf@email.com",
-	  	  name: "John Doe",
-	  	  phone: "123-456-7890"
-	  	},
-	  	{
-				id: 2,
-				email: "mail@jimmy.net",
-				name: "Jimmy",
-	  	  phone: "123-456-7890"
-	  	}
-		]);
-});
-
-router.get('/users/:userId', cors(corsOptions), (req, res) => {
-	  res.send({
-			id: 1,
-			email: "asdf@email.com",
-			name: "John Doe",
-			phone: "123-456-7890"
-	  });
-});
-
-// this should return a list of 'transactions' for the specified user id: 
-//   user created, purchases, etc.
-router.get('/history/:userId', cors(corsOptions), (req, res) => {
-	  res.send({
-			id: 1,
-			email: "asdf@email.com",
-			name: "John Doe",
-			phone: "123-456-7890"
-	  });
-});
-
-
-// usage stats (amount of products taken) by datetime range
-router.get('/usage/:from/:until', cors(corsOptions), (req, res) => {
-	  res.send([
-	    {
-				product: "prod name",
-				amount: 2
-			},
-			{
-				product: "another product",
-				amount: 1
-			}
-		]);
-
-});
-*/
 
 module.exports = router;
