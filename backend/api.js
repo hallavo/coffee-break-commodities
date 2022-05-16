@@ -10,12 +10,29 @@ const corsOptions = {
 }
 
 
+
+router.post('/test', (req, res) => {
+	console.log(req.body);
+	res.send(req.body);
+});
+
+
 router.get('/edit', (req, res) => {
-	res.render('edit-profile', {
-		name: "Office Gnome",
-		email: "office.gnome@company.com",
-		phone: "1234567890"
-	});
+	db.one(`SELECT userid, username, email, phone, name
+	         FROM users
+	         WHERE username = $1`, `senior-office-gnome`)
+	  .then(data => {
+	  	res.render('edit-profile', {
+	  		userid: data["userid"],
+	  		username: data["username"],
+	  		email: data["email"],
+	  		phone: data["phone"],
+	  		name: data["name"]
+	  	});
+	  })
+	  .catch(error => {
+			console.log('ERROR:', error);
+		});
 });
 
 
@@ -78,6 +95,7 @@ router.get('/api/users', (req, res) => {
 	  });
 });
 
+
 //getUser (with id)
 router.get('/api/users/:userId', (req, res) => {
 	const uid = req.params["userId"];
@@ -97,11 +115,12 @@ router.get('/api/users/:userId', (req, res) => {
 // editUser
 router.put('/api/users/:userId', (req, res) => {
 	const data = req.body;
+	console.log(data);
 	const uid = req.params["userId"];
-	const vals = [ data["username"], data["email"], data["name"], data["phone"] ];
+	const vals = [ data["email"], data["name"], data["phone"] ];
 	db.none(`UPDATE users
-	         SET username = $1, email = $2, name = $3, phone = $4
-			     WHERE userid = $5`, [...vals, uid])
+	         SET email = $1, name = $2, phone = $3
+			     WHERE userid = $4`, [...vals, uid])
 	  .then(data => {
 			console.log(data);
 			res.send(data);

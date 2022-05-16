@@ -2,6 +2,7 @@
 
 <head>
 <script src="https://kit.fontawesome.com/11d6728434.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -12,29 +13,45 @@
 <a href="/logout"> <i class="fa-solid fa-right-from-bracket"></i> </a>
 </div>
 
-<form action="/edit">
+<form action="" method="post" id="user-form">
 <fieldset>
   <legend>Edit profile:</legend>
 
   <label for="name-text">Name:</label>
-  <input type="text" id="name-text" value="<%= name %>">
+  <input type="text" id="name-text" name="name" value="<%= name %>">
 
   <br>
 
   <label for="email-text">E-mail:</label>
-  <input type="text" id="email-text" value="<%= email %>">
+  <input type="text" id="email-text" name="email" value="<%= email %>">
 
   <br>
 
   <label for="phone-text">Phone:</label>
-  <input type="text" id="phone-text" value="<%= phone %>">
+  <input type="text" id="phone-text" name="phone" value="<%= phone %>">
 
   <br>
 
   <input type="submit" value="Submit">
+  <input type="hidden" id="userid" name="userid" value="<%= userid %>">
 
 </fieldset>
 </form>
 
+<script>
+const userForm = document.getElementById('user-form');
+userForm.addEventListener('submit', async function (e) {
+  e.preventDefault();
+  const formData = new FormData(userForm).entries()
+  const response = await fetch('/api/users/1', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(Object.fromEntries(formData))
+  });
+
+const result = await response.json();
+console.log(result)
+});
+</script>
 </body>
 </html>
