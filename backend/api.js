@@ -122,8 +122,8 @@ router.put('/api/users/:userId', (req, res) => {
 	         SET email = $1, name = $2, phone = $3
 			     WHERE userid = $4`, [...vals, uid])
 	  .then(data => {
-			console.log(data);
-			res.send(data);
+			console.log(data); // update queries never return data!!!!!
+			res.send(data);    // only error handling required
 		})
 	  .catch(error => {
 			console.log('ERROR:', error);
