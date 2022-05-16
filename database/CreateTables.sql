@@ -1,5 +1,5 @@
 CREATE TABLE products (
-  product varchar PRIMARY KEY,
+  name varchar PRIMARY KEY,
   price decimal NOT NULL,
   active boolean NOT NULL,
   dateadded date NOT NULL
@@ -25,5 +25,5 @@ CREATE TABLE events (
   eventtype varchar references eventtypes(eventtype),
   eventtime timestamp,
   amount int,
-  product varchar references products(product)
+  product varchar references products(name)
 );

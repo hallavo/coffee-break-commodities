@@ -20,18 +20,14 @@ router.get('/edit', (req, res) => {
 
 
 router.get('/take', (req, res) => {
-	res.render('take-products', {
-		products: [
-			{
-				product: "Office Gnome",
-				price: "1.00"
-			},
-			{
-				product: "asdf",
-				price: "1.00"
-			}
-		]
-	});
+	db.many(`SELECT name
+	         FROM products`)
+	  .then(data => {
+	  	res.render('take-products', {products: data});
+	  })
+	  .catch(error => {
+			console.log('ERROR:', error);
+		});
 });
 
 
@@ -51,7 +47,7 @@ router.post('/api/events', (req, res) => {
 
 
 //	getEventsByDatetimeRange
-//	example: GET http://127.0.0.1:3000/usage/2022-05-01:12:00/2022-05-01:13:00
+//	example: GET http://127.0.0.1:3000/api/usage/2022-05-01:12:00/2022-05-01:13:00
 router.get('/api/usage/:from/:to', (req, res) => {
 	const [from, to] = [ req.params["from"], req.params["to"] ];
 	db.any(`SELECT product, sum(amount)
@@ -117,7 +113,7 @@ router.put('/api/users/:userId', (req, res) => {
 
 
 //	getProductStats
-//	example: GET http://127.0.0.1:3000/product-stats
+//	example: GET http://127.0.0.1:3000/api/product-stats
 router.get('/api/product-stats', (req, res) => {
 	db.any(`SELECT username, product, sum(amount)
 	        FROM events

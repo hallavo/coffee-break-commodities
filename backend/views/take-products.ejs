@@ -7,9 +7,9 @@
 <body>
 
 <div class="button-row">
-<i class="fa-solid fa-utensils"></i>
-<i class="fa-solid fa-user"></i>
-<i class="fa-solid fa-right-from-bracket"></i>
+<a href="/take">   <i class="fa-solid fa-utensils"></i>           </a>
+<a href="/edit">   <i class="fa-solid fa-user"></i>               </a>
+<a href="/logout"> <i class="fa-solid fa-right-from-bracket"></i> </a>
 </div>
 
 <form action="/take">
@@ -19,8 +19,8 @@
   <label for="product-dropdown">Product:</label>
   <select id="product-dropdown">  
 
-    <% products.forEach(function(p){ %>
-    <option value=<%= p.product %>> <%= p.product %> </option>
+    <% products.forEach(function(product){ %>
+    <option value=<%= product.name %>> <%= product.name %> </option>
     <% }) %>
 
   </select>
