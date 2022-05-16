@@ -17,18 +17,18 @@
 <fieldset>
   <legend>Edit profile:</legend>
 
-  <label for="name-text">Name:</label>
-  <input type="text" id="name-text" name="name" value="<%= name %>">
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name" value="<%= name %>">
 
   <br>
 
-  <label for="email-text">E-mail:</label>
-  <input type="text" id="email-text" name="email" value="<%= email %>">
+  <label for="email">E-mail:</label>
+  <input type="text" id="email" name="email" value="<%= email %>">
 
   <br>
 
-  <label for="phone-text">Phone:</label>
-  <input type="text" id="phone-text" name="phone" value="<%= phone %>">
+  <label for="phone">Phone:</label>
+  <input type="text" id="phone" name="phone" value="<%= phone %>">
 
   <br>
 
@@ -39,14 +39,18 @@
 </form>
 
 <script>
+const userid = document.getElementById('userid').getAttribute('value');
+const name = document.getElementById('name').getAttribute('value');
+const email = document.getElementById('email').getAttribute('value');
+const phone = document.getElementById('phone').getAttribute('value');
+const userid = document.getElementById('userid').getAttribute('value');
 const userForm = document.getElementById('user-form');
 userForm.addEventListener('submit', async function (e) {
   e.preventDefault();
-  const formData = new FormData(userForm).entries()
-  const response = await fetch('/api/users/1', {
+  const response = await fetch(`/api/users/${userid}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(Object.fromEntries(formData))
+    body: JSON.stringify({name: name, email: email, phone: phone})
   });
 
 const result = await response.json();
