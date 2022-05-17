@@ -29,11 +29,11 @@
 
   <label for="amount-dropdown">Amount:</label>
   <select id="amount-dropdown">   
-    <option>1</option>
-    <option>2</option>
-    <option>3</option>
-    <option>4</option>
-    <option>5</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
   </select>
 
   <br>
@@ -45,27 +45,28 @@
 
 
 <script>
-const now = new Date();
-// slice trick for zero padding
-// note that for month, 0 -> Jan and 11 -> Dec
-const date = (`0${now.getUTCDate()}`).slice(-2);
-const month = (`0${now.getUTCMonth() + 1}`).slice(-2);
-const year = now.getUTCFullYear();
-const hours = (`0${now.getUTCHours()}`).slice(-2);
-const minutes = (`0${now.getUTCMinutes()}`).slice(-2);
-const seconds = (`0${now.getUTCSeconds()}`).slice(-2);
-
-const username = 'senior-office-gnome';
-const eventtype = 'take';
-const eventtime = `${year}-${month}-${date}:${hours}:${minutes}:${seconds}`;
-const amountDropdown = document.getElementById('amount-dropdown');
-const amount = amountDropdown.options[amountDropdown.selectedIndex].value;
-const productDropdown = document.getElementById('product-dropdown');
-const product = productDropdown.options[productDropdown.selectedIndex].value;
-console.log(product);
 const takeForm = document.getElementById('take-form');
 takeForm.addEventListener('submit', async function (e) {
   e.preventDefault();
+	const now = new Date();
+	// slice trick for zero padding
+	// note that for month, 0 -> Jan and 11 -> Dec
+	const date = (`0${now.getUTCDate()}`).slice(-2);
+	const month = (`0${now.getUTCMonth() + 1}`).slice(-2);
+	const year = now.getUTCFullYear();
+	const hours = (`0${now.getUTCHours()}`).slice(-2);
+	const minutes = (`0${now.getUTCMinutes()}`).slice(-2);
+	const seconds = (`0${now.getUTCSeconds()}`).slice(-2);
+
+	const username = 'senior-office-gnome';
+	const eventtype = 'take';
+	const eventtime = `${year}-${month}-${date}:${hours}:${minutes}:${seconds}`;
+	const amountDropdown = document.getElementById('amount-dropdown');
+	const amount = amountDropdown.options[amountDropdown.selectedIndex].value;
+	const productDropdown = document.getElementById('product-dropdown');
+	const product = productDropdown.options[productDropdown.selectedIndex].value;
+	console.log(product);
+
   const response = await fetch(`/api/events`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
