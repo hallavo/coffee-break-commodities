@@ -51,11 +51,13 @@ router.get('/take', (req, res) => {
 router.post('/api/events', (req, res) => {
 	const data = req.body;
 	const vals = [ data["username"], data["eventtype"], data["eventtime"], data["amount"], data["product"] ];
-	db.none(`INSERT INTO events (username, eventtype, eventtime, amount, product)
-			     VALUES ($1, $2, $3, $4, $5)`, vals)
+	db.one(`INSERT INTO events (username, eventtype, eventtime, amount, product)
+			     VALUES ($1, $2, $3, $4, $5)
+			     RETURNING eventid`, vals)
 	  .then(data => {
 			console.log(data);
 			res.send(data);
+			res.status(201).end();
 		})
 	  .catch(error => {
 			console.log('ERROR:', error);
