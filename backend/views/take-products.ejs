@@ -1,48 +1,56 @@
 <html>
 
 <head>
-<script src="https://kit.fontawesome.com/11d6728434.js" crossorigin="anonymous"></script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://kit.fontawesome.com/11d6728434.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
 
-<div class="button-row">
-<a href="/take">   <i class="fa-solid fa-utensils"></i>           </a>
-<a href="/edit">   <i class="fa-solid fa-user"></i>               </a>
-<a href="/logout"> <i class="fa-solid fa-right-from-bracket"></i> </a>
+<div class="container">
+
+	<div class="icon-row">
+		<a href="/take">   <i class="fa-solid fa-utensils fa-5x"></i>           </a>
+		<a href="/edit">   <i class="fa-solid fa-user fa-5x"></i>               </a>
+		<a href="/logout"> <i class="fa-solid fa-right-from-bracket fa-5x"></i> </a>
+	</div>
+
+	<div class="form">
+		<form action="" method="post" id="take-form">
+		<fieldset>
+			<legend>Take products:</legend>
+
+			<label for="product-dropdown">Product:</label>
+			<select id="product-dropdown">  
+
+				<% products.forEach(function(product){ %>
+				<option value="<%= product.name %>"> <%= product.name %> </option>
+				<% }) %>
+
+			</select>
+
+			<br>
+
+			<label for="amount-dropdown">Amount:</label>
+			<select id="amount-dropdown">   
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+			</select>
+
+			<br>
+
+			<input type="submit" value="Submit">
+
+		</fieldset>
+		</form>
+	</div>
+
 </div>
-
-<form action="" method="post" id="take-form">
-<fieldset>
-  <legend>Take products:</legend>
-
-  <label for="product-dropdown">Product:</label>
-  <select id="product-dropdown">  
-
-    <% products.forEach(function(product){ %>
-    <option value="<%= product.name %>"> <%= product.name %> </option>
-    <% }) %>
-
-  </select>
-
-  <br>
-
-  <label for="amount-dropdown">Amount:</label>
-  <select id="amount-dropdown">   
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-  </select>
-
-  <br>
-
-  <input type="submit" value="Submit">
-
-</fieldset>
-</form>
-
 
 <script>
 const takeForm = document.getElementById('take-form');

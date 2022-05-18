@@ -1,42 +1,50 @@
 <html>
 
 <head>
-<script src="https://kit.fontawesome.com/11d6728434.js" crossorigin="anonymous"></script>
-
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://kit.fontawesome.com/11d6728434.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
 
-<div class="button-row">
-<a href="/take">   <i class="fa-solid fa-utensils"></i>           </a>
-<a href="/edit">   <i class="fa-solid fa-user"></i>               </a>
-<a href="/logout"> <i class="fa-solid fa-right-from-bracket"></i> </a>
+<div class="container">
+
+	<div class="icon-row">
+		<a href="/take">   <i class="fa-solid fa-utensils fa-5x"></i>           </a>
+		<a href="/edit">   <i class="fa-solid fa-user fa-5x"></i>               </a>
+		<a href="/logout"> <i class="fa-solid fa-right-from-bracket fa-5x"></i> </a>
+	</div>
+
+	<div class="form">
+		<form action="" method="post" id="user-form">
+		<fieldset>
+			<legend>Edit profile:</legend>
+
+			<label for="name">Name:</label>
+			<input type="text" id="name-text" name="name" value="<%= name %>">
+
+			<br>
+
+			<label for="email">E-mail:</label>
+			<input type="text" id="email-text" name="email" value="<%= email %>">
+
+			<br>
+
+			<label for="phone">Phone:</label>
+			<input type="text" id="phone-text" name="phone" value="<%= phone %>">
+
+			<br>
+
+			<input type="submit" value="Submit">
+			<input type="hidden" id="userid-text" name="userid" value="<%= userid %>">
+
+		</fieldset>
+		</form>
+	</div>
+
 </div>
-
-<form action="" method="post" id="user-form">
-<fieldset>
-  <legend>Edit profile:</legend>
-
-  <label for="name">Name:</label>
-  <input type="text" id="name-text" name="name" value="<%= name %>">
-
-  <br>
-
-  <label for="email">E-mail:</label>
-  <input type="text" id="email-text" name="email" value="<%= email %>">
-
-  <br>
-
-  <label for="phone">Phone:</label>
-  <input type="text" id="phone-text" name="phone" value="<%= phone %>">
-
-  <br>
-
-  <input type="submit" value="Submit">
-  <input type="hidden" id="userid-text" name="userid" value="<%= userid %>">
-
-</fieldset>
-</form>
 
 <script>
 const userForm = document.getElementById('user-form');
