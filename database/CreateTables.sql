@@ -27,3 +27,21 @@ CREATE TABLE events (
   amount int,
   product varchar references products(name)
 );
+
+CREATE TABLE federated_credentials (
+	user_id integer NOT NULL,
+	provider text NOT NULL,
+	subject text NOT NULL,
+	PRIMARY KEY (provider, subject)
+);
+
+CREATE TABLE "session" (
+	"sid" varchar NOT NULL COLLATE "default",
+	"sess" json NOT NULL,
+	"expire" timestamp(6) NOT NULL
+)
+WITH (OIDS=FALSE);
+
+ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+CREATE INDEX "IDX_session_expire" ON "session" ("expire");

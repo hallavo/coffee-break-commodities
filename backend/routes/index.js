@@ -1,7 +1,7 @@
-//api.js
+//index.js
 const express = require('express');
 const router = express.Router();
-const db = require('./db');
+const db = require('../db');
 const cors = require('cors');
 
 const corsOptions = {
