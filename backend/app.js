@@ -3,9 +3,14 @@ const express = require('express');
 const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const csrf = require('csurf');
+const passport = require('passport');
+const db = require('./db');
 
-// api.js for the routes
-const api = require('./api');
+// index.js for most routes, auth.js for authentication
+const indexRouter = require('./routes/index.js');
+const authRouter = require('./routes/auth.js');
 
 // express app object
 const app = express();
@@ -14,12 +19,39 @@ const app = express();
 app.set('views', path.join(__dirname, 'views')); // set views dir to 'CWD/views'
 app.set('view engine', 'ejs');
 
+// static resources served from public/
+app.use(express.static(path.join(__dirname, 'public')));
+
 // body parsing middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// all routes are falling back into api.js
-app.use('/', api);
+// middleware for authentication
+app.use(session({
+  secret: 'nakkimakkara',
+  resave: false, // don't save session if unmodified
+  saveUninitialized: false, // don't create session until something stored
+  store: new (require('connect-pg-simple')(session))({
+    pgPromise: db
+  })
+}));
+app.use(csrf());
+app.use(passport.authenticate('session'));
+app.use(function(req, res, next) {
+  var msgs = req.session.messages || [];
+  res.locals.messages = msgs;
+  res.locals.hasMessages = !! msgs.length;
+  req.session.messages = [];
+  next();
+});
+app.use(function(req, res, next) {
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
+
+// normal routes and authentication are under different routers
+app.use('/', indexRouter);
+app.use('/', authRouter);
 
 // HTTP port setting
 const port = process.env.PORT || '3000';
