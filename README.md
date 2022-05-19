@@ -2,6 +2,15 @@
 
 This is a simple app for keeping track of the use of various foods, drinks and household items stored in the office kitchen of an imaginary IT company. 
 
+The service is composed of a PostgreSQL database, Express.js backend and a vanilla Javascript frontend.
+
+The user can:
+* mark products as taken
+* edit their user profile
+
+It is currently not possible to sign up, log in or log out. Instead, the username `senior-office-gnome` has been hardcoded into the API calls where necessary.
+
+I spent a considerable amout of time trying to set up both local and OAuth authentication using the Passport.js library. Unfortunately, I couldn't get it to work. The authentication-related code is still included and the `/login` can be accessed by entering the URL. Feel free to have a look if you're curious.
 
 ## Install
 
@@ -13,8 +22,7 @@ docker-compose up
 
 
 ## Usage
-Log in at: http://localhost:3000/.
-
+Start from: http://localhost:3000/. It redirects to `/take`. Also the logout icon redirects to `/take`. 
 
 ## API
 
