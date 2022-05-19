@@ -42,7 +42,7 @@ userForm.addEventListener('submit', async function (e) {
 	const password = document.getElementById('password-text').value;
 
   const response = await fetch(`/login/password`, {
-    method: 'PUT',
+    method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({username: username, password: password})
   });
