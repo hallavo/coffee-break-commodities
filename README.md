@@ -10,7 +10,7 @@ The user can:
 
 It is currently not possible to sign up, log in or log out. Instead, the username `senior-office-gnome` has been hardcoded into the API calls where necessary.
 
-I spent a considerable amout of time trying to set up both local and OAuth authentication using the Passport.js library. Unfortunately, I couldn't get it to work. The authentication-related code is still included and the `/login` can be accessed by entering the URL. Feel free to have a look if you're curious.
+I spent a considerable amout of time trying to set up both local and OAuth authentication using the Passport.js library. Unfortunately, I couldn't get it to work. The authentication-related code is still included and the `/login` page can be accessed by entering its URL. Feel free to have a look if you're curious.
 
 ## Install
 
