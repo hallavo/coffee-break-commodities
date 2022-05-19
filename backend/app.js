@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const csrf = require('csurf');
 const passport = require('passport');
@@ -26,7 +27,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// middleware for authentication
+// authentication-related middleware
+app.use(cookieParser());
 app.use(session({
   secret: 'nakkimakkara',
   resave: false, // don't save session if unmodified

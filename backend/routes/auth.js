@@ -1,6 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
+//const GoogleStrategy = require('passport-google-oidc');
 const db = require('../db');
 
 
@@ -19,7 +20,7 @@ passport.use(new GoogleStrategy({
   scope: [ 'profile' ],
   state: true
 },
-function(accessToken, refreshToken, profile, cb) {
+function verify(accessToken, refreshToken, profile, cb) {
   db.any('SELECT * FROM federated_credentials WHERE provider = $1 AND subject = $2', [
     'https://accounts.google.com',
     profile.id
@@ -110,10 +111,10 @@ router.get('/login/federated/google', passport.authenticate('google'));
     automatically created and their Google account is linked.  When an existing
     user returns, they are signed in to their linked account.
 */
-router.get('/oauth2/redirect/google', passport.authenticate('google', {
-  successReturnToOrRedirect: '/',
-  failureRedirect: '/failure'
-  //failureRedirect: '/login'
+router.get('/oauth2/redirect/google',
+	passport.authenticate('google', {
+		successReturnToOrRedirect: '/',
+		failureRedirect: '/login'
 }));
 
 /* POST /logout
@@ -121,7 +122,7 @@ router.get('/oauth2/redirect/google', passport.authenticate('google', {
  * This route logs the user out.
  */
 router.post('/logout', function(req, res, next) {
-  req.logout();
+  //req.logout(); // commented out to prevent an error from occurring
   res.redirect('/');
 });
 

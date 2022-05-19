@@ -12,10 +12,15 @@ const corsOptions = {
 //
 // App pages
 //
+router.get('/', (req, res) => {
+  res.redirect('/take');
+});
+
+
 router.get('/edit', (req, res) => {
 	db.one(`SELECT userid, username, email, phone, name
 	         FROM users
-	         WHERE username = $1`, `senior-office-gnome`)
+	         WHERE username = $1`, `senior-office-gnome`) // username hardcoded
 	  .then(data => {
 	  	res.render('edit-profile', {
 	  		userid: data["userid"],
