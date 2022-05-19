@@ -5,6 +5,7 @@ This is a simple app for keeping track of the use of various foods, drinks and h
 The service is composed of a PostgreSQL database, Express.js backend and a vanilla Javascript frontend.
 
 The user can:
+
 * mark products as taken
 * edit their user profile
 
