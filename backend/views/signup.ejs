@@ -11,10 +11,10 @@
 <div class="container">
 
 	<div class="form">
-		<form action="" method="post" id="login-form">
+		<form action="" method="post" id="signup-form">
 		<fieldset>
 
-			<legend>Log in:</legend>
+			<legend>Sign up:</legend>
 
 			<label for="username">Username:</label>
 			<input type="text" id="username-text">
@@ -28,27 +28,24 @@
 
 		</fieldset>
 		</form>
-
-		<a href="/signup">Sign up here</a>
 	</div>
 
 </div>
 
 <script>
-const userForm = document.getElementById('login-form');
+const userForm = document.getElementById('signup-form');
 userForm.addEventListener('submit', async function (e) {
   e.preventDefault();
 	const username = document.getElementById('username-text').value;
 	const password = document.getElementById('password-text').value;
 
-  const response = await fetch(`/login/password`, {
+  const response = await fetch(`/signup`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({username: username, password: password})
   });
 
 const result = await response.json();
-console.log(result)
 });
 </script>
 </body>

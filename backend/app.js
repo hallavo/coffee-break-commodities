@@ -5,8 +5,7 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const csrf = require('csurf');
-const passport = require('passport');
+const logger = require('morgan');
 const db = require('./db');
 
 // index.js for most routes, auth.js for authentication
@@ -15,6 +14,8 @@ const authRouter = require('./routes/auth.js');
 
 // express app object
 const app = express();
+
+app.use(logger('dev'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views')); // set views dir to 'CWD/views'
@@ -37,19 +38,6 @@ app.use(session({
     pgPromise: db
   })
 }));
-app.use(csrf());
-app.use(passport.authenticate('session'));
-app.use(function(req, res, next) {
-  var msgs = req.session.messages || [];
-  res.locals.messages = msgs;
-  res.locals.hasMessages = !! msgs.length;
-  req.session.messages = [];
-  next();
-});
-app.use(function(req, res, next) {
-  res.locals.csrfToken = req.csrfToken();
-  next();
-});
 
 // normal routes and authentication are under different routers
 app.use('/', indexRouter);
