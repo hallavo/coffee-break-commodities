@@ -2,16 +2,14 @@
 
 This is a simple app for keeping track of the use of various foods, drinks and household items stored in the office kitchen of an imaginary IT company. 
 
-The service is composed of a PostgreSQL database, Express.js backend and a vanilla Javascript frontend.
+The service is composed of a PostgreSQL database, an Express.js backend and a vanilla Javascript frontend.
 
 The user can:
 
 * mark products as taken
 * edit their user profile
 
-It is currently not possible to sign up, log in or log out. Instead, the username `senior-office-gnome` has been hardcoded into the API calls where necessary.
-
-I spent a considerable amout of time trying to set up both local and OAuth authentication using the Passport.js library. Unfortunately, I couldn't get it to work. The authentication-related code is still included and the `/login` page can be accessed by entering its URL. Feel free to have a look if you're curious.
+It is currently not possible to sign up, log in or log out. Instead, the username `senior-office-gnome` has been hardcoded into the API calls where necessary. Local and OAuth authentication using the Passport.js library may be implemented sometime in the future.
 
 ## Install
 
